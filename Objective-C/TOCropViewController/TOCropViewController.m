@@ -455,7 +455,7 @@ static const CGFloat kTOCropViewControllerToolbarHeight = 44.0f;
 //TODO: Deprecate iOS 7 properly at the right time
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)willRotateToInterfaceOrientationOld:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     self.toolbarSnapshotView = [self.toolbar snapshotViewAfterScreenUpdates:NO];
     self.toolbarSnapshotView.frame = self.toolbar.frame;
@@ -487,7 +487,7 @@ static const CGFloat kTOCropViewControllerToolbarHeight = 44.0f;
     self.cropView.internalLayoutDisabled = YES;
 }
 
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)willAnimateRotationToInterfaceOrientationOld:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     //Remove all animations in the toolbar
     self.toolbar.frame = [self frameForToolbarWithVerticalLayout:!UIInterfaceOrientationIsLandscape(toInterfaceOrientation)];
@@ -512,7 +512,7 @@ static const CGFloat kTOCropViewControllerToolbarHeight = 44.0f;
     self.toolbar.alpha = 1.0f;
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)didRotateFromInterfaceOrientationOld:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self.toolbarSnapshotView removeFromSuperview];
     self.toolbarSnapshotView = nil;
@@ -530,11 +530,11 @@ static const CGFloat kTOCropViewControllerToolbarHeight = 44.0f;
     if (currentSize.width < size.width)
         orientation = UIInterfaceOrientationLandscapeLeft;
     
-    [self willRotateToInterfaceOrientation:orientation duration:coordinator.transitionDuration];
+    [self willRotateToInterfaceOrientationOld:orientation duration:coordinator.transitionDuration];
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self willAnimateRotationToInterfaceOrientation:orientation duration:coordinator.transitionDuration];
+        [self willAnimateRotationToInterfaceOrientationOld:orientation duration:coordinator.transitionDuration];
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self didRotateFromInterfaceOrientation:orientation];
+        [self didRotateFromInterfaceOrientationOld:orientation];
     }];
 }
 #pragma clang diagnostic pop

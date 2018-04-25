@@ -28,14 +28,18 @@
 @implementation ViewController
 
 #pragma mark - Image Picker Delegate -
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
-{
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    if([image isKindOfClass:[UIImage class]] == NO) {
+        return;
+    }
+    
     TOCropViewController *cropController = [[TOCropViewController alloc] initWithCroppingStyle:self.croppingStyle image:image];
     cropController.delegate = self;
-
+    
     // Uncomment this if you wish to provide extra instructions via a title label
     //cropController.title = @"Crop Image";
-
+    
     // -- Uncomment these if you want to test out restoring to a previous crop setting --
     //cropController.angle = 90; // The initial angle in which the image will be rotated
     //cropController.imageCropFrame = CGRectMake(0,0,2848,4288); //The initial frame that the crop controller will have visible.
@@ -45,7 +49,7 @@
     //cropController.aspectRatioLockEnabled = YES; // The crop box is locked to the aspect ratio and can't be resized away from it
     //cropController.resetAspectRatioEnabled = NO; // When tapping 'reset', the aspect ratio will NOT be reset back to default
     //cropController.aspectRatioPickerButtonHidden = YES;
-
+    
     // -- Uncomment this line of code to place the toolbar at the top of the view controller --
     //cropController.toolbarPosition = TOCropViewControllerToolbarPositionTop;
     
